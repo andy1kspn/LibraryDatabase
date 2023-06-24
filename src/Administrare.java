@@ -202,17 +202,26 @@ public class Administrare {
     private static String getTextFieldValue(Container container, String labelText) {
         Component[] components = container.getComponents();
         for (Component component : components) {
-            if (component instanceof JPanel) {
-                JPanel panel = (JPanel) component;
-                JLabel label = (JLabel) panel.getComponent(0);
-                JTextField textField = (JTextField) panel.getComponent(1);
-                if (label.getText().equals(labelText)) {
-                    return textField.getText();
+            if (component instanceof javax.swing.JPanel) {
+                javax.swing.JPanel panel = (javax.swing.JPanel) component;
+                if (panel.getComponentCount() > 0) {
+                    Component innerComponent = panel.getComponent(0);
+                    if (innerComponent instanceof javax.swing.JLabel) {
+                        javax.swing.JLabel label = (javax.swing.JLabel) innerComponent;
+                        if (label.getText().equals(labelText) && panel.getComponentCount() > 1) {
+                            Component textFieldComponent = panel.getComponent(1);
+                            if (textFieldComponent instanceof javax.swing.JTextField) {
+                                javax.swing.JTextField textField = (javax.swing.JTextField) textFieldComponent;
+                                return textField.getText();
+                            }
+                        }
+                    }
                 }
             }
         }
         return "";
     }
+
 
     private static void resetTextFields(Container container) {
         Component[] components = container.getComponents();

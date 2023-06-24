@@ -59,6 +59,10 @@
             constraints.gridy = 0;
             constraints.insets = new Insets(10, 10, 10, 10);
 
+
+
+
+
             frame.getContentPane().removeAll();
             frame.getContentPane().add(searchPanel);
             frame.revalidate();
@@ -155,9 +159,14 @@
         }
 
         private static void displaySearchResults(String[] options) {
-            outputTextArea.setText("");
-            for (String option : options) {
-                outputTextArea.append(option + "\n");
+            outputTextArea.setText("Numar de ordine | Numar de identificare | Denumire | Autor 1 | Autor 2 | Editura | Status | Data | Ora | Persoana\n");
+            outputTextArea.append("=====================================================================================\n");
+            if (options.length > 0) {
+                for (String option : options) {
+                    outputTextArea.append(option + "\n");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Nu exista astfel de element in baza de date!", "Cautare esuata!", JOptionPane.INFORMATION_MESSAGE);
             }
         }
 
