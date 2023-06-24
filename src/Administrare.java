@@ -11,25 +11,6 @@ import javax.swing.border.EmptyBorder;
 public class Administrare {
     private static JTextArea outputTextArea;  // Added JTextArea field
 
-    public static void createTextFile() {
-
-        String content = "Numar de ordine | Numar de identificare | Denumire | Autor 1 | Autor 2 | Editura | Status | Data | Ora | Persoana";
-        String filePath = System.getProperty("user.home") + File.separator + "DATABASE.txt";
-
-        File file = new File(filePath);
-
-        if (file.exists() && containsLine(file, content)) {
-            System.out.println("Fisierul deja exista!");
-            return;
-        }
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write(content);
-            System.out.println("Fisierul este prezent la adresa: " + filePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static void createTextFile(JFrame frame) {
         JPanel adminPanel = new JPanel(new GridLayout(9, 2, 10, 10));
@@ -146,24 +127,24 @@ public class Administrare {
         frame.repaint();
     }
 
-        // Schedule a task to refresh the content every 5 seconds
+    // Schedule a task to refresh the content every 5 seconds
 
 
 
 
     private static void refreshDetailsPanel() {
-            String filePath = System.getProperty("user.home") + File.separator + "DATABASE.txt";
+        String filePath = System.getProperty("user.home") + File.separator + "DATABASE.txt";
 
-            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-                StringBuilder content = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    content.append(line).append("\n");
-                }
-                outputTextArea.setText(content.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            StringBuilder content = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                content.append(line).append("\n");
             }
+            outputTextArea.setText(content.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -176,16 +157,11 @@ public class Administrare {
         panel.add(jLabel, BorderLayout.NORTH);
 
         JTextField textField = new JTextField();
-        stylizeInputField(textField);
         panel.add(textField, BorderLayout.CENTER);
 
         return panel;
     }
 
-    private static void stylizeInputField(JTextField textField) {
-        textField.setPreferredSize(new Dimension(200, 50));
-        textField.setFont(textField.getFont().deriveFont(Font.PLAIN, 14f));
-    }
 
     private static void stylizeButton(JButton button) {
         button.setFont(button.getFont().deriveFont(Font.BOLD, 14f));
@@ -210,19 +186,7 @@ public class Administrare {
         button.setBackground(new Color(32, 226, 0));
     }
 
-    private static boolean containsLine(File file, String line) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String currentLine;
-            while ((currentLine = reader.readLine()) != null) {
-                if (currentLine.equals(line)) {
-                    return true;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
+
 
     private static void appendToFile(String content) {
         String filePath = System.getProperty("user.home") + File.separator + "DATABASE.txt";
